@@ -1,0 +1,540 @@
+/* ==========================================================
+   Radio Tarang – Week 2 responsive site (mobile-first)
+
+   1 Tokens   2 Base   3 Utilities   4 Components
+   5 Header   6 Sections   7 Footer
+   8 Breakpoints (min-width: 600 / 900 / 1200)
+   9 User preferences (reduced motion, hover)
+   ========================================================== */
+
+/* 1. TOKENS ----------------------------------------------- */
+:root {
+  --ink: #14122b;
+  --ink-soft: #4b4966;
+  --paper: #f6f5ff;
+  --white: #ffffff;
+  --indigo: #3a2bff;
+  --indigo-dark: #2a1fd6;
+  --sun: #ffc400;
+  --line: #d9d6f0;
+
+  --font-head: "Bricolage Grotesque", system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Public Sans", system-ui, "Segoe UI", Roboto, sans-serif;
+
+  /* Fluid type: each size grows smoothly with the viewport */
+  --fs-body: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --fs-lead: clamp(1.125rem, 1rem + 0.6vw, 1.4rem);
+  --fs-h3: clamp(1.15rem, 1.05rem + 0.4vw, 1.4rem);
+  --fs-h2: clamp(1.7rem, 1.3rem + 2vw, 2.75rem);
+  --fs-h1: clamp(2.1rem, 1.4rem + 4vw, 4.25rem);
+
+  /* Fluid spacing */
+  --gap: clamp(1rem, 0.7rem + 1.5vw, 2rem);
+  --section-pad: clamp(3rem, 2rem + 5vw, 6rem);
+
+  --radius: 10px;
+  --max: 70rem;
+  --header-h: 4rem;
+}
+
+/* 2. BASE ------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--white);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-head);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.6em;
+}
+h1 { font-size: var(--fs-h1); font-weight: 800; }
+h2 { font-size: var(--fs-h2); font-weight: 800; }
+h3 { font-size: var(--fs-h3); font-weight: 700; }
+
+p { margin: 0 0 1em; max-width: 62ch; }
+a { color: inherit; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+/* Fluid images: never wider than their box, never distorted */
+img { display: block; max-width: 100%; height: auto; }
+
+/* 3. UTILITIES -------------------------------------------- */
+[hidden] { display: none !important; }
+
+.wrap {
+  width: min(100% - 2 * var(--gap), var(--max));
+  margin-inline: auto;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--sun);
+  color: var(--ink);
+}
+.skip-link:focus { left: 0; }
+
+:focus-visible {
+  outline: 3px solid var(--sun);
+  outline-offset: 3px;
+}
+
+/* 4. COMPONENTS ------------------------------------------- */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.4rem;
+  font: 600 1rem var(--font-body);
+  text-align: center;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--sun);
+  border: 2px solid var(--sun);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.btn-sm { padding: 0.45rem 1.1rem; font-size: 0.95rem; }
+.btn-ghost { background: transparent; color: var(--white); border-color: var(--white); }
+
+.text-link {
+  font-weight: 600;
+  color: var(--indigo);
+  text-underline-offset: 4px;
+}
+
+.actions {
+  display: grid;                 /* stacked, full-width buttons on phones */
+  gap: 0.75rem;
+}
+
+/* 5. HEADER + NAVIGATION ---------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--ink);
+  color: var(--white);
+}
+.header-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--header-h);
+}
+.brand {
+  font: 800 1.5rem var(--font-head);
+  text-decoration: none;
+  letter-spacing: -0.03em;
+}
+.brand span { color: var(--sun); }
+
+/* Hamburger button: only shown when JavaScript is running (html.js) */
+.nav-button {
+  display: none;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.js .nav-button { display: grid; }
+.bars,
+.bars::before,
+.bars::after {
+  display: block;
+  width: 1.4rem;
+  height: 2px;
+  background: currentColor;
+  content: "";
+  transition: transform 0.2s, top 0.2s, background-color 0.2s;
+}
+.bars { position: relative; }
+.bars::before { position: absolute; top: -7px; }
+.bars::after  { position: absolute; top: 7px; }
+
+/* Icon turns into an X while the menu is open */
+.nav-button[aria-expanded="true"] .bars { background: transparent; }
+.nav-button[aria-expanded="true"] .bars::before { top: 0; transform: rotate(45deg); }
+.nav-button[aria-expanded="true"] .bars::after  { top: 0; transform: rotate(-45deg); }
+
+/* Without JavaScript the links simply sit under the logo.
+   With JavaScript they collapse into a panel opened by the button. */
+.header-inner { flex-wrap: wrap; }
+.main-nav { flex-basis: 100%; padding-bottom: 0.75rem; }
+.js .main-nav {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: calc(-1 * var(--gap));
+  right: calc(-1 * var(--gap));
+  padding: 1rem var(--gap) 1.5rem;
+  background: var(--ink);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+.js .main-nav.is-open { display: block; }
+.main-nav ul { display: grid; gap: 0.25rem; }
+.main-nav a:not(.btn) {
+  display: block;
+  padding: 0.75rem 0;
+  text-decoration: none;
+  font-weight: 500;
+}
+.main-nav a[aria-current="true"]:not(.btn) { box-shadow: 0 2px 0 var(--sun); }
+.main-nav .btn { margin-top: 0.5rem; display: block; }
+
+/* 6. SECTIONS --------------------------------------------- */
+.section { padding-block: var(--section-pad); }
+.section-tint { background: var(--paper); }
+
+/* Hero */
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  min-height: min(34rem, 85svh);
+  color: var(--white);
+  overflow: hidden;
+}
+.hero-bg,
+.hero-bg img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+.hero::before {                 /* contrast layer behind the text */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, rgba(20, 18, 43, 0.85), rgba(20, 18, 43, 0.25));
+}
+.hero-content { padding-block: 3rem; }
+.lead { font-size: var(--fs-lead); }
+
+/* Show cards: auto-fit grid, no breakpoint needed to change columns */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--gap);
+}
+.card {
+  overflow: hidden;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.card img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+.card-b img { filter: hue-rotate(60deg); }
+.card-c img { filter: hue-rotate(150deg); }
+.card-d img { filter: hue-rotate(230deg); }
+.card-body { padding: 1.1rem 1.25rem 1.4rem; }
+.card-body p { margin: 0; color: var(--ink-soft); }
+
+/* Schedule: a real table on wide screens, stacked rows on phones */
+.table-scroll { overflow-x: auto; }
+.schedule {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  border-radius: var(--radius);
+}
+.schedule thead {                /* hidden visually on phones, kept for screen readers */
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+.schedule tr {
+  display: block;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.schedule th,
+.schedule td {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0.75rem;
+  padding: 0.35rem 0;
+  text-align: left;
+  font-weight: 400;
+}
+.schedule th[scope="row"] { font-weight: 700; }
+.schedule [data-label]::before {
+  content: attr(data-label);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+/* Stories: laid out by the width of their own container (container query) */
+.stories { container: stories / inline-size; }
+.stories-grid {
+  display: grid;
+  gap: var(--gap);
+}
+.story {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+.story-feature img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.story-body { padding: 1.25rem 1.5rem 1.5rem; }
+.story-body p { color: var(--ink-soft); }
+
+/* Support */
+.support { background: var(--indigo); color: var(--white); }
+.support-inner { display: grid; gap: var(--gap); align-items: center; }
+.signup { display: grid; gap: 0.75rem; }
+.signup label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.signup input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font: inherit;
+  color: var(--ink);
+  border: 2px solid var(--white);
+  border-radius: 999px;
+}
+
+/* 7. FOOTER ----------------------------------------------- */
+.site-footer {
+  padding-top: 3rem;
+  background: var(--ink);
+  color: var(--white);
+}
+.footer-grid { display: grid; gap: 2rem; }
+.footer-brand { font: 800 1.5rem var(--font-head); margin: 0 0 0.25rem; }
+.footer-title { font-size: 1rem; margin-bottom: 0.75rem; color: var(--sun); }
+.footer-grid li { padding-block: 0.2rem; }
+.footer-grid a { text-underline-offset: 3px; }
+.legal { margin-top: 2.5rem; padding-block: 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.15); font-size: 0.9rem; }
+.legal p { margin: 0; }
+
+/* 8. BREAKPOINTS (mobile-first: each one adds, none undoes) */
+
+/* Container query: stories adapt to the space they get, not the screen */
+@container stories (min-width: 40rem) {
+  .stories-grid { grid-template-columns: 1fr 1fr; }
+  .story-feature { grid-column: 1 / -1; }
+}
+@container stories (min-width: 56rem) {
+  .story-feature { display: grid; grid-template-columns: 1.2fr 1fr; }
+  .story-feature img { height: 100%; aspect-ratio: auto; }
+  .story-feature .story-body { align-self: center; padding: 2rem; }
+}
+
+/* Small tablets and up */
+@media (min-width: 600px) {
+  .actions { display: flex; flex-wrap: wrap; }
+  .signup { grid-template-columns: 1fr auto; }
+  .signup .field-error,
+  .signup .form-status { grid-column: 1 / -1; }
+
+  /* Schedule becomes a real table */
+  .schedule { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .schedule thead { position: static; width: auto; height: auto; clip: auto; }
+  .schedule tr { display: table-row; margin: 0; padding: 0; border: 0; }
+  .schedule th, .schedule td { display: table-cell; padding: 0.9rem 1rem; border-bottom: 1px solid var(--line); }
+  .schedule thead th { background: var(--ink); color: var(--white); font-size: 0.9rem; }
+  .schedule tbody tr:last-child > * { border-bottom: 0; }
+  .schedule [data-label]::before { content: none; }
+}
+
+/* Tablets and up: the hamburger becomes an inline menu */
+@media (min-width: 900px) {
+  .js .nav-button { display: none; }
+  .main-nav,
+  .js .main-nav {
+    display: block;
+    position: static;
+    flex-basis: auto;
+    padding: 0;
+    background: none;
+    border: 0;
+  }
+  .main-nav ul { display: flex; align-items: center; gap: 1.75rem; }
+  .main-nav a:not(.btn) { padding: 0.25rem 0; }
+  .main-nav a:not(.btn):hover { box-shadow: 0 2px 0 var(--sun); }
+  .main-nav .btn { margin: 0; display: inline-block; }
+
+  .hero { min-height: min(40rem, 80svh); }
+  .hero-content { max-width: 44rem; margin-inline: 0; margin-left: max(var(--gap), calc((100% - var(--max)) / 2)); }
+
+  .support-inner { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 2fr 1fr 1fr; }
+}
+
+/* Large desktops: just let the layout breathe */
+@media (min-width: 1200px) {
+  :root { --max: 76rem; }
+}
+
+/* Landscape phones: short viewport, so shrink the hero */
+@media (max-height: 480px) and (orientation: landscape) {
+  .hero { min-height: 0; }
+  .hero-content { padding-block: 2rem; }
+}
+
+/* 9. USER PREFERENCES ------------------------------------- */
+@media (hover: hover) {
+  .btn:hover { filter: brightness(0.92); }
+  .btn-ghost:hover { background: var(--white); color: var(--ink); filter: none; }
+  .text-link:hover { text-decoration-thickness: 3px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* 10. INTERACTIVE FEATURES (driven by script.js) ---------- */
+
+/* Features that need JavaScript stay hidden without it */
+.search, .filters, .on-air { display: none; }
+.js .search { display: block; }
+.js .filters { display: flex; }
+.js .on-air { display: flex; }
+
+/* Show search */
+.search { max-width: 26rem; margin-bottom: var(--gap); }
+.search label { display: block; margin-bottom: 0.35rem; font-weight: 600; }
+.search input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  font: inherit;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+}
+.no-results { margin-top: var(--gap); font-weight: 600; }
+
+/* On-air banner */
+.on-air {
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1rem;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+}
+.dot {
+  flex: none;
+  width: 0.75rem;
+  height: 0.75rem;
+  background: #9b9ab0;
+  border-radius: 50%;
+}
+.on-air.is-live .dot {
+  background: #e0242f;
+  animation: pulse 1.6s ease-out infinite;
+}
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(224, 36, 47, 0.6); }
+  100% { box-shadow: 0 0 0 0.7rem rgba(224, 36, 47, 0); }
+}
+
+/* Language filter chips */
+.filters { flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+.chip {
+  padding: 0.45rem 1.1rem;
+  font: 600 0.95rem var(--font-body);
+  color: var(--ink);
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.chip[aria-pressed="true"] { color: var(--white); background: var(--ink); }
+
+/* Row that is on air right now */
+.schedule tr.is-live { background: #fff6d6; box-shadow: inset 4px 0 0 var(--indigo); }
+
+/* Form feedback */
+.field-error {
+  margin: 0;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #a31515;
+  background: var(--white);
+  border-radius: 8px;
+}
+.signup input[aria-invalid="true"] { border-color: var(--sun); box-shadow: 0 0 0 3px var(--sun); }
+.form-status { margin: 0; font-weight: 600; }
+.form-status:empty { display: none; }
+.signup .btn:disabled { opacity: 0.6; cursor: wait; }
+
+/* Reveal on scroll: only active when JavaScript runs */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.js .reveal.is-visible { opacity: 1; transform: none; }
+
+/* Back to top */
+.to-top {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  color: var(--ink);
+  background: var(--sun);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  .on-air.is-live .dot { animation: none; }
+  .bars, .bars::before, .bars::after { transition: none; }
+}
+
+#main:focus { outline: none; }
