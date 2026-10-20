@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Workbench – A student makerspace</title>
+  <meta name="description" content="Workbench is a student makerspace with tools, mentors and weekly build nights.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- WIREFRAME ZONE 1: Header + navigation -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#top" aria-label="Workbench home">Workbench</a>
+      <nav aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#tools">Tools</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a class="btn btn-small" href="#join">Join</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- WIREFRAME ZONE 2: Hero (text left, image placeholder right) -->
+    <section class="hero" id="top">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <h1>Build it on Saturday. Break it. Build it better.</h1>
+          <p class="lead">Workbench is a student makerspace with soldering irons, 3D printers and people who have already made the mistake you are about to make.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#join">Join build night</a>
+            <a class="btn btn-ghost" href="#projects">See what we made</a>
+          </div>
+        </div>
+        <figure class="hero-media">
+          <div class="placeholder placeholder-hero" role="img" aria-label="Photo placeholder: members assembling a robot arm"></div>
+          <figcaption>Placeholder: members assembling a robot arm</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- WIREFRAME ZONE 3: Three feature blocks -->
+    <section class="features" id="tools" aria-labelledby="tools-title">
+      <div class="container">
+        <h2 id="tools-title">What you can use</h2>
+        <div class="feature-grid">
+          <article class="feature">
+            <h3>Electronics bench</h3>
+            <p>Soldering stations, oscilloscopes and a wall of Arduino and ESP32 boards you can borrow.</p>
+          </article>
+          <article class="feature">
+            <h3>Print and cut</h3>
+            <p>Two 3D printers and a laser cutter. Book a slot, bring a file, leave with a part.</p>
+          </article>
+          <article class="feature">
+            <h3>Mentors on call</h3>
+            <p>Final-year students hold office hours every evening and review your wiring before you power it on.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- WIREFRAME ZONE 4: Content row (image left, text + sidebar right) -->
+    <section class="projects" id="projects" aria-labelledby="projects-title">
+      <div class="container">
+        <h2 id="projects-title">Recent projects</h2>
+        <div class="projects-layout">
+          <article class="project-main">
+            <figure>
+              <div class="placeholder placeholder-project" role="img" aria-label="Photo placeholder: solar-powered weather station"></div>
+              <figcaption>Placeholder: solar-powered weather station</figcaption>
+            </figure>
+            <h3>Rooftop weather station</h3>
+            <p>Four second-year students built a station that logs temperature, humidity and air quality every ten minutes and publishes the numbers to a simple dashboard. The first enclosure leaked in the monsoon, so the second one has a drip edge and a vented lid.</p>
+            <a class="text-link" href="#projects">Read the build log</a>
+          </article>
+
+          <aside class="sidebar" aria-labelledby="next-title">
+            <h3 id="next-title">Coming up</h3>
+            <ul class="event-list">
+              <li><strong>Sat, 10 am</strong> Soldering basics</li>
+              <li><strong>Wed, 6 pm</strong> Intro to CAD</li>
+              <li><strong>Sat, 2 pm</strong> Demo hour: show your build</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- WIREFRAME ZONE 5: About / quote -->
+    <section class="about" id="about" aria-labelledby="about-title">
+      <div class="container about-inner">
+        <h2 id="about-title">Why it exists</h2>
+        <blockquote>
+          <p>Classes teach the theory. Workbench is where you find out what the theory forgot to mention.</p>
+          <footer>Workbench founding team</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- WIREFRAME ZONE 6: Call to action -->
+    <section class="cta" id="join" aria-labelledby="join-title">
+      <div class="container cta-inner">
+        <h2 id="join-title">Come to the next build night</h2>
+        <p>No experience needed. Bring a laptop and an idea.</p>
+        <form class="signup" action="#" method="post">
+          <label for="email">Email address</label>
+          <input id="email" name="email" type="email" placeholder="you@college.edu" required>
+          <button class="btn" type="submit">Save my seat</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- WIREFRAME ZONE 7: Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 Workbench Makerspace</p>
+      <nav aria-label="Footer navigation">
+        <ul class="footer-links">
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#tools">Tools</a></li>
+          <li><a href="#join">Join</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>

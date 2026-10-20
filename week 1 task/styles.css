@@ -1,0 +1,302 @@
+/* ==========================================================
+   Workbench – Week 1 static page
+   Sections: 1 Tokens · 2 Base · 3 Layout · 4 Components ·
+             5 Page sections · 6 Responsive · 7 Accessibility
+   ========================================================== */
+
+/* 1. DESIGN TOKENS ---------------------------------------- */
+:root {
+  --bg: #eef2f6;
+  --surface: #ffffff;
+  --ink: #14213d;
+  --ink-soft: #4a5568;
+  --accent: #f2a900;
+  --accent-dark: #c98a00;
+  --teal: #0b7a75;
+  --line: #cfd8e3;
+
+  --font-sans: "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+
+  /* type scale (roughly 1.25) */
+  --text-sm: 0.875rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5625rem;
+  --text-2xl: 2rem;
+  --text-hero: clamp(2.2rem, 5.5vw, 3.9rem);
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4.5rem;
+
+  --radius: 6px;
+  --max-width: 1120px;
+}
+
+/* 2. BASE ------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  line-height: 1.65;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-sans);
+  line-height: 1.15;
+  margin: 0 0 var(--space-2);
+  letter-spacing: -0.01em;
+}
+h1 { font-size: var(--text-hero); font-weight: 700; letter-spacing: -0.03em; }
+h2 { font-size: var(--text-2xl); font-weight: 700; }
+h3 { font-size: var(--text-lg); font-weight: 500; }
+
+p { margin: 0 0 var(--space-2); max-width: 65ch; }
+
+a { color: inherit; }
+
+ul { list-style: none; margin: 0; padding: 0; }
+
+img, svg { max-width: 100%; height: auto; }
+
+/* 3. LAYOUT ----------------------------------------------- */
+.container {
+  width: min(100% - 2rem, var(--max-width));
+  margin-inline: auto;
+}
+
+section { padding-block: var(--space-5); }
+
+/* 4. COMPONENTS ------------------------------------------- */
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.4rem;
+  background: var(--accent);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--text-base);
+  text-decoration: none;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+.btn:hover { background: var(--accent-dark); }
+
+.btn-small { padding: 0.4rem 1rem; font-size: var(--text-sm); }
+
+.btn-ghost { background: transparent; }
+.btn-ghost:hover { background: var(--ink); color: var(--surface); }
+
+.text-link {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  color: var(--teal);
+  text-underline-offset: 4px;
+}
+
+/* Image placeholders: hatched boxes, like a wireframe image slot */
+.placeholder {
+  width: 100%;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 14px, rgba(20, 33, 61, 0.08) 14px 16px),
+    #dfe6ee;
+  border: 2px dashed var(--ink-soft);
+  border-radius: var(--radius);
+}
+.placeholder-hero { aspect-ratio: 4 / 3; }
+.placeholder-project { aspect-ratio: 16 / 9; }
+
+figure { margin: 0; }
+figcaption {
+  margin-top: var(--space-1);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+/* 5. PAGE SECTIONS ---------------------------------------- */
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--surface);
+  border-bottom: 2px solid var(--ink);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-block: 0.9rem;
+}
+.logo {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--text-xl);
+  text-decoration: none;
+  letter-spacing: -0.03em;
+}
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-sans);
+  font-weight: 500;
+}
+.nav-list a:not(.btn) { text-decoration: none; padding-block: 0.25rem; }
+.nav-list a:not(.btn):hover { box-shadow: 0 2px 0 var(--accent); }
+
+/* Hero */
+.hero { padding-block: var(--space-5) var(--space-4); }
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-4);
+  align-items: center;
+}
+.lead { font-size: var(--text-lg); color: var(--ink-soft); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+
+/* Features */
+.features { background: var(--ink); color: var(--surface); }
+.features h2 { margin-bottom: var(--space-4); }
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+.feature { border-top: 4px solid var(--accent); padding-top: var(--space-2); }
+.feature p { color: #cdd6e4; }
+
+/* Projects + sidebar */
+.projects-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+.project-main figure { margin-bottom: var(--space-3); }
+.sidebar {
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+}
+.event-list li {
+  padding-block: var(--space-1);
+  border-bottom: 1px solid var(--line);
+}
+.event-list li:last-child { border-bottom: 0; }
+.event-list strong {
+  display: block;
+  font-family: var(--font-sans);
+  color: var(--teal);
+}
+
+/* About */
+.about { background: var(--surface); border-block: 2px solid var(--ink); }
+.about-inner { max-width: 760px; }
+blockquote { margin: 0; }
+blockquote p {
+  font-size: var(--text-xl);
+  font-style: italic;
+  line-height: 1.45;
+}
+blockquote footer {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+/* Call to action */
+.cta-inner { text-align: center; }
+.cta-inner p { margin-inline: auto; }
+.signup {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-1);
+  margin-top: var(--space-3);
+}
+.signup label {
+  /* visually hidden but available to screen readers */
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.signup input {
+  flex: 1 1 260px;
+  max-width: 340px;
+  padding: 0.8rem 1rem;
+  font: inherit;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+/* Footer */
+.site-footer { background: var(--ink); color: var(--surface); padding-block: var(--space-3); }
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+}
+.footer-inner p { margin: 0; }
+.footer-links { display: flex; gap: var(--space-3); }
+
+/* 6. RESPONSIVE ------------------------------------------- */
+
+/* Tablet */
+@media (max-width: 900px) {
+  section { padding-block: var(--space-4); }
+  .hero-inner,
+  .projects-layout { grid-template-columns: 1fr; }
+  .feature-grid { grid-template-columns: 1fr; gap: var(--space-3); }
+}
+
+/* Phone: logo above nav, nav links wrap instead of needing a hamburger */
+@media (max-width: 600px) {
+  .header-inner { flex-direction: column; align-items: flex-start; }
+  .nav-list { flex-wrap: wrap; gap: var(--space-2) var(--space-3); }
+  .hero-actions .btn { width: 100%; text-align: center; }
+  .signup input, .signup .btn { max-width: none; width: 100%; }
+}
+
+/* 7. ACCESSIBILITY ---------------------------------------- */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--accent);
+  padding: 0.5rem 1rem;
+  z-index: 20;
+}
+.skip-link:focus { left: 0; }
+
+:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn { transition: none; }
+}
